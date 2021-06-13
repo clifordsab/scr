@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -- ~/pictures/wall/papers/*
+
+shift $(($$ * PPID % $#))
+
+xwallpaper --stretch "$1"

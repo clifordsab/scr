@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# Grab screen.
+#
+# Requires: ffmpeg, xclip
+
+grb_date=$(date +%Y%m%d-%H%M%S)
+grb_path=~/pictures/screenshots/${grb_date%-*}
+grb_clip=/tmp/screenclip-$$.png
+grb_name=$grb_path/screenshot-$grb_date.png
+
+grb() {
+    ffmpeg \
+        -draw_mouse 0 \
+        -f x11grab \
+        -probesize 8192001 \
+        -i "$DISPLAY" \
+        -s "$SCREEN_RES" \
+        -frames:v 1 \
+        -v quiet "$1"
+}
+
+case $1 in
+    c)
+        grb "$grb_clip"
+
+        xclip \
+            -selection clipboard \
+            -t image/png "$grb_clip"
+
+        rm -f "$grb_clip"
+    ;;
+
+    s)
+        mkdir -p "$grb_path"
+
+        grb "$grb_name"
+    ;;
+esac

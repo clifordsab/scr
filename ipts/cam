@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Toggle webcam for streaming.
+#
+# Requires: mpv
+
+pkill -f /dev/video0 || mpv \
+    --autofit=20% \
+    --config=no \
+    --geometry=-10-10 \
+    --input-default-bindings=no \
+    --osc=no \
+    --vf=hflip /dev/video0 >/dev/null 2>&1

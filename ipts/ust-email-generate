@@ -1,0 +1,25 @@
+#!/bin/bash
+
+IFS=,
+
+while read -r l f; do
+    l=${l// }
+    l=${l//.}
+    l=${l//-}
+    l=${l//\"}
+    l=${l//\'}
+    l=${l//é/e}
+    l=${l//Ñ/N}
+    l=${l,,}
+
+    f=$(echo "$f" | awk '{ print $1$2 }')
+    f=${f//.}
+    f=${f//-}
+    f=${f//\"}
+    f=${f//\'}
+    f=${f//é/e}
+    f=${f//Ñ/N}
+    f=${f,,}
+
+    printf '%s\n' "$f.$l.shs@ust.edu.ph"
+done | xclip -sel clip

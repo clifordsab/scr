@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Open files by type.
+
+[ -z "$1" ] || [ ! -e "$1" ] && exit
+
+case $1 in
+    *.3gp|*.avi|*.flac|*.m4a|*.mp3|*.mp4|*.mkv|*.opus|*.wav|\
+    *.3GP|*.AVI|*.FLAC|*.M4A|*.MP3|*.MP4|*.MKV|*.OPUS|*.WAV)
+        mpv "$1"
+    ;;
+
+    *.bmp|*.gif|*.jpeg|*.jpg|*.png|*.webp|\
+    *.BMP|*.GIF|*.JPEG|*.JPG|*.PNG|*.WEBP)
+        sxiv -ab "$1"
+    ;;
+
+    *.pdf|*.svg|\
+    *.PDF|*.SVG)
+        firefox --private-window "$1"
+    ;;
+esac

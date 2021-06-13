@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Record screen.
+#
+# Requires: ffmpeg
+
+rec_date=$(date +%Y%m%d-%H%M%S)
+rec_path=~/videos/recordings/${rec_date%-*}
+rec_name=$rec_path/rec-$rec_date.mp4
+
+mkdir -p "$rec_path"
+
+# ALSA.
+# -f alsa \
+# -i hw:0,0 \
+
+# Pulseaudio.
+# -f pulse \
+# -i default \
+# -probesize 9223372036854776832 \
+
+ffmpeg \
+    -f x11grab \
+    -probesize 8192001 \
+    -thread_queue_size 2048 \
+    -r 30 \
+    -s "$SCREEN_RES" \
+    -i "$DISPLAY" \
+    -f pulse \
+    -guess_layout_max 0 \
+    -thread_queue_size 2048 \
+    -i src_main \
+    -ac 2 \
+    -c:a aac \
+    -c:v libx264 \
+    -crf 0 "$rec_name"

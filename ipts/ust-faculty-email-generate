@@ -1,0 +1,28 @@
+#!/bin/bash
+
+IFS=,
+
+while read -r l f; do
+    l=${l// }
+    l=${l//.}
+    l=${l//-}
+    l=${l//\"}
+    l=${l//\'}
+    l=${l//Ñ/N}
+    l=${l,,}
+
+    f=${f// }
+    f=${f//.}
+    f=${f//-}
+    f=${f//\"}
+    f=${f//\'}
+    f=${f//Ñ/N}
+    f=${f,,}
+
+    f1=${f:0:1}
+    f2_len=${#f}
+    f2_len=$((f2_len-1))
+    f2=${f:f2_len:1}
+
+    printf '%s\n' "${f1}${f2}${l}@ust.edu.ph"
+done | xclip -sel clip

@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# Configure display.
+#
+# Requires: xrandr
+
+case $1 in
+    e)
+        xrandr \
+            --output VGA1 \
+            --preferred \
+            --right-of LVDS1
+    ;;
+
+    m)
+        xrandr \
+            --output VGA1 \
+            --auto \
+            --same-as LVDS1
+
+        xrandr \
+            --output LVDS1 \
+            --auto
+    ;;
+
+    r)
+        xrandr \
+            --output LVDS1 \
+            --auto
+    ;;
+esac

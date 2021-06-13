@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+[ "$(id -u)" -eq 0 ] || {
+    printf 'Be root.\n'
+    exit 1
+}
+
+curl -fLo /etc/hosts https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts

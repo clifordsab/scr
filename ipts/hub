@@ -1,0 +1,44 @@
+#!/bin/sh -e
+#
+# Lazy git.
+#
+# Requires: git
+
+case $1 in
+    a)  git add .
+        git commit -m "update"
+        git push ;;
+
+    b)  git branch -a ;;
+
+    c)  [ -z "$2" ] && exit
+        git clone "https://github.com/$2" ;;
+
+    f)  git fetch upstream
+        git merge upstream/master
+        git push origin master ;;
+
+    m)  git checkout master ;;
+
+    n)  [ -z "$2" ] && exit
+        git checkout -b "$2" ;;
+
+    p)  [ -z "$2" ] && [ -z "$3" ] && exit
+        git add .
+        git commit -m "$3"
+        git push --set-upstream origin "$2" ;;
+
+    r)  git reflog expire --expire=now --all
+        git repack -ad
+        git prune ;;
+
+    u)  [ -z "$2" ] && exit
+        git remote add upstream "https://github.com/$2" ;;
+
+    x)  rm -rf .git
+        git init
+        git add .
+        git commit -m init
+        git remote add origin "https://github.com/$2.git"
+        git push -u --force origin master ;;
+esac

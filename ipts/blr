@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Run picom.
+#
+# Requires: picom
+
+# shellcheck disable=2046
+kill $(pidof picom) 2>/dev/null
+
+picom \
+    -b \
+    --backend glx \
+    --blur-background \
+    --blur-method kawase \
+    --blur-strength 20 \
+    --active-opacity 0.8 \
+    --inactive-opacity 0.8 \
+    --shadow

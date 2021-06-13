@@ -1,0 +1,5 @@
+#!/bin/bash
+
+while IFS=, read -r l _; do
+    printf '%s\n' "$l"
+done | xclip -sel clip
